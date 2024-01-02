@@ -1,4 +1,5 @@
 import tkinter as tk
+from pygame import mixer
 
 def start_timer():
     global timer_running
@@ -16,10 +17,14 @@ def update_timer(seconds):
         else:
             label.config(text="Timer completed!")
             timer_running = False
+            play_sound()
+            input_box.delete(0, tk.END)
     else:
         if timer_running:
             label.config(text="Timer completed!")
             timer_running = False
+            play_sound()
+            input_box.delete(0, tk.END)
         else:
             label.config(text="Timer stopped")
 
@@ -33,8 +38,14 @@ def add_minutes(value):
     input_box.delete(0, tk.END)
     input_box.insert(tk.END, value)
 
+def play_sound():
+    mixer.init()
+    mixer.music.load("super.mp3")
+    mixer.music.play()
+
 
 window = tk.Tk()
+window.geometry("600x600")
 
 timer_running = False  # Flag to control the timer
 
