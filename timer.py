@@ -1,5 +1,6 @@
 import tkinter as tk
 from pygame import mixer
+from datetime import datetime
 
 
 def start_timer():
@@ -8,6 +9,11 @@ def start_timer():
     input_value = int(input_box.get()) * 60  # Convert minutes to seconds
     update_timer(input_value)
 
+def show_time():
+    
+    current_time = datetime.now().strftime("%H:%M:%S")
+    time_label.config(text=current_time)
+    window.after(1000, show_time)
 
 def update_timer(seconds):
     global timer_running
@@ -57,6 +63,9 @@ timer_running = False  # Flag to control the timer
 label = tk.Label(text="Timer", master=window, height=1)
 label.grid(row=0, column=7, pady=10, sticky=tk.W + tk.E + tk.N + tk.S)
 
+time_label = tk.Label(text="",master=window, height=1)
+time_label.grid(row=0, column=6, pady=10, sticky=tk.W + tk.E + tk.N + tk.S)
+
 input_box = tk.Entry()
 input_box.grid(row=1, column=7)
 
@@ -80,5 +89,7 @@ btn_fifteen = tk.Button(
     master=window, text="15 minutes", command=lambda: add_minutes(15), width=12
 )
 btn_fifteen.grid(row=3, column=8, pady=10)
+
+show_time()
 
 window.mainloop()
